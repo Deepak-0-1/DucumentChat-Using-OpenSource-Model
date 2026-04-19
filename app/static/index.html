@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuChat | AI-Powered Document Interaction</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="light-theme">
+    <div class="app-layout">
+        <!-- Column 1: Navigation Sidebar -->
+        <aside id="sidebar" class="nav-sidebar" style="width: 300px; flex-shrink: 0;">
+            <div class="brand">
+                <span class="brand-logo">📚</span>
+                <span class="brand-name">DocuChat</span>
+            </div>
+
+            <button id="new-chat-btn" class="btn-primary-rect">+ Start New Chat</button>
+
+            <nav class="nav-menu" style="flex: unset;">
+                <a href="#" class="nav-item active"><span class="icon">🏠</span> Home</a>
+            </nav>
+
+            <!-- Library moved to Sidebar -->
+            <section class="library-section" style="padding: 20px 0; border: none; background: transparent;">
+                <div class="upload-container">
+                    <label for="file-upload" class="upload-box">
+                        <span class="upload-large-icon">📤</span>
+                        <span class="upload-text">Upload Document</span>
+                        <input type="file" id="file-upload" accept=".pdf" hidden>
+                    </label>
+                </div>
+
+                <div class="doc-list-container" style="margin-top: 20px; max-height: 250px;">
+                    <div class="search-container">
+                        <div style="position: relative;">
+                            <span style="position: absolute; left: 12px; top: 10px; color: var(--text-muted);">🔍</span>
+                            <input type="text" id="doc-search" class="search-input" placeholder="Search documents...">
+                        </div>
+                    </div>
+                    <div class="doc-list-header">
+                        <span class="icon">📂</span> My Library
+                    </div>
+                    <div id="docs-grid" class="docs-grid">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <div class="user-profile" style="margin-top: auto;">
+                <img src="https://ui-avatars.com/api/?name=User&background=EF7D2D&color=fff" alt="User" class="avatar">
+                <div class="user-info">
+                    <span class="user-name">Deepak Singh</span>
+                    <span class="user-email">dsdeep2324@gmail.com</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Resizer 1 -->
+        <div id="resizer1" class="resizer"></div>
+
+        <!-- Column 2: Document Viewer -->
+        <section id="viewer" class="viewer-section" style="flex: 1; min-width: 200px;">
+            <header class="section-header"
+                style="padding: 24px 32px; border-bottom: 1px solid var(--border-color); background: #ffffff;">
+                <h2 id="viewer-title" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">Select
+                    Document to Preview</h2>
+            </header>
+            <div id="pdf-container"
+                style="flex:1; display:flex; align-items:center; justify-content:center; background: #525659; overflow: hidden; position: relative;">
+                <div class="text-white" style="color: white;">Upload or select a PDF to preview</div>
+            </div>
+        </section>
+
+        <!-- Resizer 2 -->
+        <div id="resizer2" class="resizer"></div>
+
+        <!-- Column 3: Chat Interface -->
+        <main id="chat" class="chat-section" style="width: 450px; flex-shrink: 0;">
+            <header class="chat-header">
+                <h2 id="active-doc-title">Chat with Document</h2>
+            </header>
+
+            <div id="doc-insights-panel" class="doc-insights" style="display: none;">
+                <div class="insight-item">📄 <span id="insight-pages" class="insight-value">...</span></div>
+                <div class="insight-item">📊 <span id="insight-topics" class="insight-value">...</span></div>
+                <div class="insight-item">📌 <span id="insight-questions" class="insight-value">...</span></div>
+            </div>
+
+            <div id="chat-messages" class="chat-box">
+                <div class="starter-ui" id="ai-starter-ui">
+                    <div class="starter-ui-icon">🤖</div>
+                    <h3>AI Workspace Ready</h3>
+                    <p style="margin: 8px 0; font-size: 0.9rem;">I'm analyzing your context. What would you like to
+                        know?</p>
+                    <div class="quick-actions" style="margin-top: 16px;">
+                        <button type="button" class="quick-btn" onclick="fillAndSubmit('Summarize this document')">💡
+                            Summarize</button>
+                        <button type="button" class="quick-btn" onclick="fillAndSubmit('What are the key topics?')">🔑
+                            Key Topics</button>
+                        <button type="button" class="quick-btn" onclick="fillAndSubmit('Extract important questions')">❓
+                            Extract Questions</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form id="chat-form" class="chat-input-form">
+                    <input type="text" id="user-input" placeholder="Ask anything about the document..." required
+                        autocomplete="off">
+                    <button type="submit" class="send-btn">
+                        <span class="send-icon">➔</span>
+                    </button>
+                </form>
+                <div class="quick-actions" style="margin-top: 10px; opacity: 0.8; transform: scale(0.9);">
+                    <button type="button" class="quick-btn" onclick="fillAndSubmit('Summarize this')">📊
+                        Summarize</button>
+                    <button type="button" class="quick-btn" onclick="fillAndSubmit('Key Points')">🔍 Key Points</button>
+                    <button type="button" class="quick-btn" onclick="fillAndSubmit('Extract Questions')">📌
+                        Questions</button>
+                    <button type="button" class="quick-btn" onclick="fillAndSubmit('Insights')">📈 Insights</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
