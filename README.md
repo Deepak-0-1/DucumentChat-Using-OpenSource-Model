@@ -11,7 +11,7 @@ DocuMind is a high-performance, production-ready RAG (Retrieval-Augmented Genera
 
 ## 🛠 Tech Stack
 - **Backend**: FastAPI, LangChain, ChromaDB, PyMuPDF
-- **Intelligence**: Ollama (Llama 3 / Nomic Embeddings)
+- **Intelligence**: Ollama (gemma4 / Nomic Embeddings)
 - **Frontend**: Vanilla JS, HTML5, CSS3 (Glassmorphism)
 - **DevOps**: Docker, Docker Compose
 
